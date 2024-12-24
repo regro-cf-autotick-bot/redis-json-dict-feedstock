@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/redis_json_dict-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/redis_json_dict-{{ version }}.tar.gz
   sha256: 27db0913b6eac9f6087d0bea903a33be387d9d03e5d097e9c6435b481dd248c2
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - hatchling
     - hatch-vcs
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - redis-py >=5.0
     - orjson >=3.9
 
@@ -32,6 +32,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   summary: A Redis-backed persistent Python dictionary
